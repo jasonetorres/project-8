@@ -53,21 +53,19 @@ const DeveloperSurvey: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Survey submitted:', formData);
-
+  
     try {
-      const response = await fetch('https://script.google.com/a/macros/teamtorc.com/s/AKfycbw77h6BDWgKiABkk9oBcd_tGBugd3-tWV3KCSJF_djOUwswMHdcS3yoyXeCz6fdMFjQvA/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbw77h6BDWgKiABkk9oBcd_tGBugd3-tWV3KCSJF_djOUwswMHdcS3yoyXeCz6fdMFjQvA/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        mode: 'no-cors' // Set the mode to 'no-cors' for an opaque response
       });
-
-      if (response.ok) {
-        alert('Thank you for participating in the survey!');
-      } else {
-        alert('There was an error submitting your survey. Please try again.');
-      }
+  
+      // Since the response is opaque, you won't be able to check response.ok or access the response body
+      alert('Survey submitted. Thank you for participating!');
     } catch (error) {
       console.error('Error submitting survey:', error);
       alert('There was an error submitting your survey. Please try again.');

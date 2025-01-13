@@ -1,6 +1,5 @@
 // src/components/ui/Card.tsx
 import React from 'react';
-import UserSurvey from '../pages/UserSurvey';
 
 interface CardProps {
   children: React.ReactNode;
