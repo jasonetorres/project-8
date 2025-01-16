@@ -31,6 +31,8 @@ const DeveloperSurvey: React.FC = () => {
     'Swift',
     'Kotlin',
     'C++',
+    'ServiceNow (Glide)',              
+    'Salesforce (Apex)',
     'Other'
   ];
   const frameworks = [
@@ -44,8 +46,10 @@ const DeveloperSurvey: React.FC = () => {
     'Laravel',
     'Ruby on Rails',
     'Flutter',
+    'ServiceNow',   
+    'Salesforce',   
     'Other'
-  ];
+];
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>, field: keyof FormData) => {
     setFormData({ ...formData, [field]: e.target.value });
   };
