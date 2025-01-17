@@ -7,6 +7,7 @@ interface FormData {
   yearsExperience: string;
   framework: string;
   interested: string[];
+  region: string;
 }
 
 const DeveloperSurvey: React.FC = () => {
@@ -15,7 +16,8 @@ const DeveloperSurvey: React.FC = () => {
     otherLanguages: [],
     yearsExperience: '',
     framework: '',
-    interested: []
+    interested: [],
+    region: ''
   });
 
   const languages = [
@@ -31,10 +33,26 @@ const DeveloperSurvey: React.FC = () => {
     'Swift',
     'Kotlin',
     'C++',
+    'C#',
+    'Scala',
+    'R',
+    'MATLAB',
+    'Dart',
+    'Lua',
+    'Perl',
+    'Haskell',
+    'Clojure',
+    'F#',
+    'COBOL',
+    'Assembly',
+    'Shell scripting',
     'ServiceNow (Glide)',              
     'Salesforce (Apex)',
-    'Other'
+    'Elixir',
+    'Julia',
+    'Groovy'
   ];
+
   const frameworks = [
     '.NET Core',
     'Spring',
@@ -47,9 +65,50 @@ const DeveloperSurvey: React.FC = () => {
     'Ruby on Rails',
     'Flutter',
     'ServiceNow',   
-    'Salesforce',   
-    'Other'
-];
+    'Salesforce',
+    'Next.js',
+    'NestJS',
+    'FastAPI',
+    'Flask',
+    'ASP.NET MVC',
+    'Phoenix',
+    'Svelte',
+    'Gatsby',
+    'Nuxt.js',
+    'Quasar',
+    'Blazor',
+    'Spring Boot',
+    'Ruby on Rails',
+    'Symphony',
+    'Gin',
+    'Echo',
+    'Fiber'
+  ];
+
+  const regions = [
+    'North America - US',
+    'North America - Canada',
+    'Latin America - Mexico',
+    'Latin America - Brazil',
+    'Latin America - Other South America',
+    'Latin America - Central America',
+    'Latin America - Caribbean',
+    'Europe - Western',
+    'Europe - Eastern',
+    'Europe - Nordic',
+    'Europe - Mediterranean',
+    'Asia - East (China, Japan, Korea)',
+    'Asia - Southeast',
+    'Asia - South (India, Pakistan, etc)',
+    'Asia - Central',
+    'Middle East',
+    'Africa - North',
+    'Africa - Sub-Saharan',
+    'Oceania - Australia',
+    'Oceania - New Zealand',
+    'Oceania - Pacific Islands'
+  ];
+
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>, field: keyof FormData) => {
     setFormData({ ...formData, [field]: e.target.value });
   };
@@ -65,10 +124,9 @@ const DeveloperSurvey: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-        mode: 'no-cors' // Set the mode to 'no-cors' for an opaque response
+        mode: 'no-cors'
       });
   
-      // Since the response is opaque, you won't be able to check response.ok or access the response body
       alert('Survey submitted. Thank you for participating!');
     } catch (error) {
       console.error('Error submitting survey:', error);
@@ -97,6 +155,24 @@ const DeveloperSurvey: React.FC = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Region Selection */}
+          <div className="space-y-2">
+            <label className="block font-medium">
+              Which region are you based in?
+            </label>
+            <select 
+              className="w-full p-2 border rounded-md"
+              value={formData.region}
+              onChange={(e) => setFormData({ ...formData, region: e.target.value })}
+              required
+            >
+              <option value="">Select your region</option>
+              {regions.map(region => (
+                <option key={region} value={region}>{region}</option>
+              ))}
+            </select>
+          </div>
+
           {/* Primary Programming Language */}
           <div className="space-y-2">
             <label className="block font-medium">
@@ -184,7 +260,7 @@ const DeveloperSurvey: React.FC = () => {
                   <input
                     type="checkbox"
                     checked={formData.interested.includes(lang)}
-                    onChange={() => handleInterestedChange(lang)} // Ensure this is used
+                    onChange={() => handleInterestedChange(lang)}
                     className="rounded"
                   />
                   <span>{lang}</span>
