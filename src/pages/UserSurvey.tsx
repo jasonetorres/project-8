@@ -118,7 +118,7 @@ const DeveloperSurvey: React.FC = () => {
     console.log('Survey submitted:', formData);
   
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbw77h6BDWgKiABkk9oBcd_tGBugd3-tWV3KCSJF_djOUwswMHdcS3yoyXeCz6fdMFjQvA/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzK1ZDt0HcDwPqboctfxrq08HXNJ3xqhRhAQ7Xxm4jN9JXrXLAK8i040Sx7eTc4AzxsSg/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
