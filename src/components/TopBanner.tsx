@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 const TopBanner: React.FC = () => {
-const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+const isDarkMode = false;
 
     return (
         <div
@@ -20,14 +20,14 @@ const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: '8px',
+                    color: isDarkMode ? '#fff' : '#000',
                 }}
             >
                 <a
-                    href="https://discord.gg/A8Th9g8TaY"
+                    href="https://discord.gg/RwVCs6JFTY"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
-                        color: isDarkMode ? '#fff' : '#000',
                         textDecoration: 'none',
                     }}
                 >
@@ -41,7 +41,6 @@ const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme
                         border: 'none',
                         cursor: 'pointer',
                         marginLeft: '10px',
-                        color: isDarkMode ? '#fff' : '#000',
                     }}
                     aria-label="close discord message">
                 </button>

@@ -56,7 +56,7 @@ export default function Home() {
         <p className="text-gray-600">
           Need help? Reach out to our community team on{' '}
           <a
-            href="https://discord.gg/ZA8Gj95dbj"
+            href="https://discord.gg/RwVCs6JFTY"
             className="text-indigo-600 hover:text-indigo-800 font-medium"
           >
             Discord
