@@ -24,7 +24,7 @@ const isDarkMode = false;
                 }}
             >
                 <a
-                    href="https://discord.gg/RwVCs6JFTY"
+                    href="https://discord.gg/E3NXKRjErh"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
