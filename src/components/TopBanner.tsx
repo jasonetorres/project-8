@@ -24,7 +24,7 @@ const isDarkMode = false;
                 }}
             >
                 <a
-                    href="https://discord.gg/E3NXKRjErh"
+                    href="https://www.torc.dev/discord"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
