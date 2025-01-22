@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import type { Event } from '../types/events';
 import { formatTo12Hour } from '../utils/timeUtils';
-import ImageGallery from './ImageGallery';
 
 interface EventCardProps {
   event: Event;

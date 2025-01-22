@@ -12,7 +12,7 @@ export default function Home() {
 
         {/* RSS Ticker */}
         
-        <div className="my-11">
+      <div className="my-11">
             <MainCarousel />
           </div>
       <p className="text-xl text-gray-600 dark:text-gray-200 max-w-2xl mx-auto text-left mb-2">
