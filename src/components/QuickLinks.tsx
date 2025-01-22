@@ -3,7 +3,7 @@ import { BookOpen, MessageCircle, Linkedin, Mail, AtSign, Twitter } from 'lucide
 
 const QuickLinks = () => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8 my-12">
+    <div className="bg-white rounded-lg shadow-2xl  p-8 my-5">
     <div className="grid md:grid-cols-2 gap-8">
       <div className="space-y-4">
         <h3 className="text-xl font-semibold text-gray-800 mb-4">Resources</h3>

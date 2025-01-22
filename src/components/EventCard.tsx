@@ -42,10 +42,11 @@ export default function EventCard({ event }: EventCardProps) {
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
             <div className="relative">
-              <ImageGallery 
-                images={event.images.length > 0 ? event.images : [event.thumbnail]} 
-                className="rounded-t-lg"
-              />
+            <img 
+              src={event.thumbnail} 
+              alt={event.title}
+              className="rounded-t-lg"
+            />
               <button
                 onClick={() => setShowModal(false)}
                 className="absolute top-2 right-2 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white transition-colors"
@@ -68,7 +69,7 @@ export default function EventCard({ event }: EventCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleLinkClick}
-                className="inline-block px-4 py-2 bg-indigo-600 dark:bg-indigo-500 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors"
+                className="inline-block px-4 py-2 bg-slate-500 dark:bg-slate-500 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors"
               >
                 View Event Details
               </a>

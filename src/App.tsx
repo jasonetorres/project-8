@@ -6,7 +6,7 @@ import FAQ from './pages/FAQ';
 import MentorshipProgram from './pages/MentorshipProgram';
 import AmbassadorProgram from './pages/AmbassadorProgram';
 import AboutUs from './pages/AboutUs';
-import { Card } from './components/Card'; // Import the Card component
+import { Card } from './components/Card';
 import UserSurvey from './pages/UserSurvey';
 
 function App() {

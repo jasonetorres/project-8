@@ -3,8 +3,7 @@ import { Users, MessageSquare } from 'lucide-react';
 
 const GetInvolved = () => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Get Involved</h2>
+    <div className="bg-white rounded-lg shadow-2xl  p-6">
       <div className="grid md:grid-cols-2 gap-8">
         <div>
           <h3 className="text-xl font-semibold text-gray-800">Community Projects</h3>

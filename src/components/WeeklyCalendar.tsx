@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { addWeeks, subWeeks, format, eachDayOfInterval, startOfWeek, endOfWeek } from 'date-fns';
 import { useEvents } from '../hooks/useEvents';
@@ -57,7 +57,7 @@ export default function WeeklyCalendar() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-white rounded-lg shadow-2xl p-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold text-gray-800">
           Week of {format(weekStart, 'MMM d, yyyy')}
@@ -79,7 +79,7 @@ export default function WeeklyCalendar() {
           </div>
           <button
             onClick={handleAddClick}
-            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-slate-500 text-white rounded-md hover:bg-indigo-700 transition-colors"
           >
             <Plus className="w-4 h-4" />
             Add Event

@@ -25,25 +25,27 @@ export default function Home() {
         <p className="text-xl text-gray-600 dark:text-gray-200 max-w-2xl mx-auto">         Best, Taylor</p>
       </div>
       <section className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">Torc Community Team</h2>
-        <p className="text-gray-600 dark:text-gray-200 mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">Torc Community Team</h2>
+        <p className="text-gray-600 dark:text-gray-200 mb-2">
           Meet your new friends
         </p>
         <TheTeam />
       </section>
 
       <section className="mb-12">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">Upcoming Events</h2>
-        <p className="text-gray-800 dark:text-gray-200 mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">Upcoming Events</h2>
+        <p className="text-gray-800 dark:text-gray-200 mb-2">
           View our calendar below to see all upcoming community events and activities.
         </p>
         <WeeklyCalendar />
       </section>
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 my-8">Get In Touch</h2>
       <QuickLinks />
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 my-8">Get Involved</h2>
       <GetInvolved />
+      <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 my-5">Anything Else</h2>
 
-      <section className="bg-white rounded-lg shadow-lg p-8 my-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">Contact Information</h2>
+      <section className="bg-white rounded-lg shadow-2xl  p-8 my-8">
         <p className="text-gray-600">
           Need help? Reach out to our community team on{' '}
           <a
