@@ -39,9 +39,9 @@ export default function WeeklyCalendar() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-5 gap-2">
         {days.map((day) => (
-          <div key={day.toString()} className="bg-white border rounded-lg shadow-sm mb-4 sm:mb-0">
+          <div key={day.toString()} className="bg-white border rounded-lg shadow-md mb-4 sm:mb-10">
             <div className="text-center p-2 bg-gray-50 rounded-t-lg">
               <p className="font-semibold text-gray-700">{format(day, 'EEEE')}</p>
               <p className="text-sm text-gray-500">{format(day, 'MMM d')}</p>

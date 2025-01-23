@@ -19,8 +19,7 @@ export default function EventCard({ event }: EventCardProps) {
     <>
       <div
         onClick={() => setShowModal(true)}
-        className="group relative bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg dark:shadow-gray-900/30 border border-gray-100 dark:border-gray-700"
-      >
+        className="group relative bg-white dark:bg-gray-800 rounded-lg overflow-hidden transform transition-all duration-200 hover:scale-[1.02] hover:shadow-lg dark:shadow-gray-900/30 border border-gray-100 dark:border-gray-700 shadow-xl">
         <div className="aspect-[16/9] w-full">
           <img
             src={event.thumbnail}

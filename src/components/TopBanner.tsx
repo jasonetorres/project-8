@@ -3,45 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 
 const TopBanner: React.FC = () => {
-const isDarkMode = false;
-
     return (
-        <div
-            style={{
-                padding: '8px 20px',
-                textAlign: 'center',
-                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                position: 'relative',
-            }}
-        >
-            <div
-                style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    color: isDarkMode ? '#fff' : '#000',
-                }}
-            >
+        <div className="p-2 text-center shadow-md relative dark:bg-gray-800">
+            <div className="inline-flex items-center justify-center gap-2">
                 <a
                     href="https://www.torc.dev/discord"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{
-                        textDecoration: 'none',
-                    }}
+                    className="no-underline"
                 >
-                    <span style={{ fontSize: '14px', fontWeight: 500 }}>We are having lots of fun on  </span>
-                    <FontAwesomeIcon icon={faDiscord} style={{ width: '16px', height: '16px' }} />
-                    <span style={{ fontSize: '14px', fontWeight: 500 }}>  Discord. Come and join us!</span>
+                    <span className="text-sm font-medium text-black dark:text-white">We are having lots of fun on </span>
+                    <FontAwesomeIcon icon={faDiscord} className="w-4 h-4 dark:text-white" />
+                    <span className="text-sm font-medium text-black dark:text-white"> Discord. Come and join us!</span>
                 </a>
                 <button
-                    style={{
-                        background: 'none',
-                        border: 'none',
-                        cursor: 'pointer',
-                        marginLeft: '10px',
-                    }}
+                    className="bg-transparent border-none cursor-pointer ml-2"
                     aria-label="close discord message">
                 </button>
             </div>
