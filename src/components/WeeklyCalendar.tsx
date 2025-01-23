@@ -16,9 +16,9 @@ export default function WeeklyCalendar() {
   const prevWeek = () => setCurrentDate(subWeeks(currentDate, 1));
 
   return (
-    <div className="bg-white rounded-lg shadow-2xl p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">
+    <div className="bg-white rounded-lg shadow-2xl p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-4 sm:mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-0 text-center sm:text-left w-full sm:w-auto">
           Week of {format(weekStart, 'MMM d, yyyy')}
         </h2>
         <div className="flex items-center gap-4">
@@ -39,9 +39,9 @@ export default function WeeklyCalendar() {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
         {days.map((day) => (
-          <div key={day.toString()} className="min-h-[600px]">
+          <div key={day.toString()} className="bg-white border rounded-lg shadow-sm mb-4 sm:mb-0">
             <div className="text-center p-2 bg-gray-50 rounded-t-lg">
               <p className="font-semibold text-gray-700">{format(day, 'EEEE')}</p>
               <p className="text-sm text-gray-500">{format(day, 'MMM d')}</p>
