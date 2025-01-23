@@ -1,13 +1,11 @@
-import { parse, format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 export const formatTo12Hour = (time: string): string => {
-  try {
-    // Parse the time string (expected format: HH:mm)
-    const date = parse(time, 'HH:mm', new Date());
-    // Format to 12-hour time with AM/PM
-    return format(date, 'h:mm a');
-  } catch (error) {
-    console.error('Error formatting time:', error);
-    return time;
-  }
+  return format(parseISO(time), 'h:mm a');
+};
+
+export const formatEventTime = (startAt: string, endAt: string, timeZone: string): string => {
+  const start = format(parseISO(startAt), 'h:mm a');
+  const end = format(parseISO(endAt), 'h:mm a');
+  return `${start} - ${end} ${timeZone}`;
 };

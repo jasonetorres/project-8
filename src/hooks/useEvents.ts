@@ -1,102 +1,82 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
-import { getEventDateKey } from '../utils/eventUtils';
-import type { Event, DayEvents } from '../types/events';
+import { format, parseISO } from 'date-fns';
+import type { Event, GuildEvent } from '../types/events';
+
+interface ApiResponse {
+  events: {
+    edges: { node: GuildEvent }[];
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: string | null;
+    };
+  };
+}
 
 export const useEvents = () => {
-  const [events, setEvents] = useState<DayEvents>({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string>();
+  const [events, setEvents] = useState<Record<string, Event[]>>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchEvents();
+    const fetchAllEvents = async () => {
+      let allFormattedEvents: Record<string, Event[]> = {};
+      let hasNextPage = true;
+      let endCursor: string | null = null;
+
+      try {
+        setLoading(true);
+
+        while (hasNextPage) {
+          const url = endCursor 
+            ? `https://guild.host/api/next/torc-dev/events/upcoming?first=50&after=${endCursor}`
+            : 'https://guild.host/api/next/torc-dev/events/upcoming';
+
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data: ApiResponse = await response.json();
+          
+          if (data?.events?.edges) {
+            data.events.edges.forEach(({ node: event }) => {
+              const date = format(parseISO(event.startAt), 'yyyy-MM-dd');
+              
+              const formattedEvent: Event = {
+                id: event.id,
+                title: event.name,
+                description: event.description || '',
+                date: format(parseISO(event.startAt), 'MMMM d, yyyy'),
+                time: event.startAt,
+                thumbnail: event.uploadedSocialCard?.url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80',
+                link: `https://guild.host/torc-dev/events/${event.prettyUrl}`,
+                images: event.uploadedSocialCard?.url ? [event.uploadedSocialCard.url] : []
+              };
+
+              if (!allFormattedEvents[date]) {
+                allFormattedEvents[date] = [];
+              }
+              allFormattedEvents[date].push(formattedEvent);
+            });
+          }
+
+          hasNextPage = data.events.pageInfo.hasNextPage;
+          endCursor = data.events.pageInfo.endCursor;
+        }
+
+        setEvents(allFormattedEvents);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+        setError(errorMessage);
+        console.error('Failed to fetch events:', error);
+        setEvents({});
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllEvents();
   }, []);
 
-  const fetchEvents = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('events')
-        .select('*')
-        .order('date', { ascending: true });
-
-      if (error) throw error;
-
-      const groupedEvents = data.reduce((acc: DayEvents, event) => {
-        const dateKey = getEventDateKey(event.date);
-        return {
-          ...acc,
-          [dateKey]: [...(acc[dateKey] || []), event],
-        };
-      }, {});
-
-      setEvents(groupedEvents);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch events');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const addNewEvent = async (event: Event) => {
-    try {
-      const { error } = await supabase
-        .from('events')
-        .insert([{
-          ...event,
-          user_id: (await supabase.auth.getUser()).data.user?.id,
-        }]);
-
-      if (error) throw error;
-      await fetchEvents();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to add event');
-      throw err;
-    }
-  };
-
-  const updateEvent = async (event: Event) => {
-    try {
-      const { error } = await supabase
-        .from('events')
-        .update({
-          title: event.title,
-          description: event.description,
-          date: event.date,
-          time: event.time,
-          thumbnail: event.thumbnail,
-          link: event.link,
-        })
-        .eq('id', event.id);
-
-      if (error) throw error;
-      await fetchEvents();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to update event');
-      throw err;
-    }
-  };
-
-  const deleteEvent = async (eventId: string) => {
-    try {
-      const { error } = await supabase
-        .from('events')
-        .delete()
-        .eq('id', eventId);
-
-      if (error) throw error;
-      await fetchEvents();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to delete event');
-      throw err;
-    }
-  };
-
-  return {
-    events,
-    loading,
-    error,
-    addNewEvent,
-    updateEvent,
-    deleteEvent,
-  };
+  return { events, loading, error };
 };

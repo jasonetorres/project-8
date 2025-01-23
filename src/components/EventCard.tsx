@@ -68,8 +68,7 @@ export default function EventCard({ event }: EventCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleLinkClick}
-                className="inline-block px-4 py-2 bg-slate-500 dark:bg-slate-500 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors"
-              >
+                className="inline-block px-4 py-2 bg-slate-500 dark:bg-slate-500 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors">
                 View Event Details
               </a>
             </div>
