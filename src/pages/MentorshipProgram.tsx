@@ -2,11 +2,14 @@ import { Users, Target, BookOpen, Award } from 'lucide-react';
 
 export default function MentorshipProgram() {
   return (
-    <div className="min-h-screen dark:bg-gray-900 transition-colors">
-      <div className="bg-indigo-600 text-white py-16">
+
+      <div className="min-h-screen dark:bg-gray-900 transition-colors">
+      <div className="">
         <div className="max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Mentorship Program</h1>
-          <p className="text-xl opacity-90">Connect, learn, and grow with experienced industry professionals</p>
+        <section className="bg-white p-8 rounded-lg shadow-md mt-12">
+          <h1 className="text-4xl font-bold text-black mb-4">Mentorship Program</h1>
+          <p className="text-xl text-gray-800 max-w-2xl mx-auto text-left mb-2">Connect, learn, and grow with experienced industry professionals</p>
+        </section>
         </div>
       </div>
 

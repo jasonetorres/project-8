@@ -4,6 +4,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        'nexa-regular': ['Nexa Regular', 'sans-serif'],
+      },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
       },
