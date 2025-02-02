@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "Nexa Regular";
+    src: url("/font/Fontfabric - Nexa Regular.woff") format("woff");
+    font-weight: regular; /* unsure on this, might be "normal" instead */
+    font-style: regular; /* unsure on this, might be "normal" instead */
+  }
