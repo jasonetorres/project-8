@@ -1,123 +1,82 @@
-import {useState, useEffect} from 'react';
-import {format, parseISO} from 'date-fns';
-import type {Event, GuildEvent} from '../types/events';
+import { useState, useEffect } from 'react';
+import { format, parseISO } from 'date-fns';
+import type { Event, GuildEvent } from '../types/events';
 
 interface ApiResponse {
-    events: {
-        edges: { node: GuildEvent }[];
-        pageInfo: {
-            hasNextPage: boolean;
-            hasPreviousPage: boolean;
-            startCursor: string | null;
-            endCursor: string | null;
-        };
+  events: {
+    edges: { node: GuildEvent }[];
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: string | null;
     };
+  };
 }
 
 export const useEvents = () => {
-    const [events, setEvents] = useState<Record<string, Event[]>>({});
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+  const [events, setEvents] = useState<Record<string, Event[]>>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchAllEvents = async () => {
-            const allFormattedEvents: Record<string, Event[]> = {};
-            let hasNextPage: boolean = true;
-            let hasPreviousPage: boolean = true;
-            let startCursor: string | null = null;
-            let endCursor: string | null = null;
+  useEffect(() => {
+    const fetchAllEvents = async () => {
+      let allFormattedEvents: Record<string, Event[]> = {};
+      let hasNextPage = true;
+      let endCursor: string | null = null;
 
-            try {
-                setLoading(true);
+      try {
+        setLoading(true);
 
-                while (hasPreviousPage) {
-                    const url = startCursor
-                        ? `https://guild.host/api/next/torc-dev/events/past?first=50&after=${startCursor}`
-                        : 'https://guild.host/api/next/torc-dev/events/past';
+        while (hasNextPage) {
+          const url = endCursor 
+            ? `https://guild.host/api/next/torc-dev/events/upcoming?first=50&after=${endCursor}`
+            : 'https://guild.host/api/next/torc-dev/events/upcoming';
 
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
 
-                    const data: ApiResponse = await response.json();
+          const data: ApiResponse = await response.json();
+          
+          if (data?.events?.edges) {
+            data.events.edges.forEach(({ node: event }) => {
+              const date = format(parseISO(event.startAt), 'yyyy-MM-dd');
+              
+              const formattedEvent: Event = {
+                id: event.id,
+                title: event.name,
+                description: event.description || '',
+                date: format(parseISO(event.startAt), 'MMMM d, yyyy'),
+                time: event.startAt,
+                thumbnail: event.uploadedSocialCard?.url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80',
+                link: `https://guild.host/events/${event.prettyUrl}`,
+                images: event.uploadedSocialCard?.url ? [event.uploadedSocialCard.url] : []
+              };
 
-                    if (data?.events?.edges) {
-                        data.events.edges.forEach(({node: event}) => {
-                            const date = format(parseISO(event.startAt), 'yyyy-MM-dd');
+              if (!allFormattedEvents[date]) {
+                allFormattedEvents[date] = [];
+              }
+              allFormattedEvents[date].push(formattedEvent);
+            });
+          }
 
-                            const formattedEvent: Event = {
-                                id: event.id,
-                                title: event.name,
-                                description: event.description || '',
-                                date: format(parseISO(event.startAt), 'MMMM d, yyyy'),
-                                time: event.startAt,
-                                thumbnail: event.uploadedSocialCard?.url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80',
-                                link: `https://guild.host/events/${event.prettyUrl}`,
-                                images: event.uploadedSocialCard?.url ? [event.uploadedSocialCard.url] : []
-                            };
+          hasNextPage = data.events.pageInfo.hasNextPage;
+          endCursor = data.events.pageInfo.endCursor;
+        }
 
-                            if (!allFormattedEvents[date]) {
-                                allFormattedEvents[date] = [];
-                            }
-                            allFormattedEvents[date].push(formattedEvent);
-                        });
-                    }
-                    hasPreviousPage = data.events.pageInfo.hasPreviousPage;
-                    startCursor = data.events.pageInfo.startCursor;
-                }
+        setEvents(allFormattedEvents);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+        setError(errorMessage);
+        console.error('Failed to fetch events:', error);
+        setEvents({});
+      } finally {
+        setLoading(false);
+      }
+    };
 
-                while (hasNextPage) {
-                    const url = endCursor
-                        ? `https://guild.host/api/next/torc-dev/events/upcoming?first=50&after=${endCursor}`
-                        : 'https://guild.host/api/next/torc-dev/events/upcoming';
+    fetchAllEvents();
+  }, []);
 
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    const data: ApiResponse = await response.json();
-
-                    if (data?.events?.edges) {
-                        data.events.edges.forEach(({node: event}) => {
-                            const date = format(parseISO(event.startAt), 'yyyy-MM-dd');
-
-                            const formattedEvent: Event = {
-                                id: event.id,
-                                title: event.name,
-                                description: event.description || '',
-                                date: format(parseISO(event.startAt), 'MMMM d, yyyy'),
-                                time: event.startAt,
-                                thumbnail: event.uploadedSocialCard?.url || 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80',
-                                link: `https://guild.host/events/${event.prettyUrl}`,
-                                images: event.uploadedSocialCard?.url ? [event.uploadedSocialCard.url] : []
-                            };
-
-                            if (!allFormattedEvents[date]) {
-                                allFormattedEvents[date] = [];
-                            }
-                            allFormattedEvents[date].push(formattedEvent);
-                        });
-                    }
-                    hasPreviousPage = data.events.pageInfo.hasPreviousPage;
-                    startCursor = data.events.pageInfo.startCursor;
-
-                    hasNextPage = data.events.pageInfo.hasNextPage;
-                    endCursor = data.events.pageInfo.endCursor;
-                }
-                setEvents(allFormattedEvents);
-            } catch (error) {
-                const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-                setError(errorMessage);
-                console.error('Failed to fetch events:', error);
-                setEvents({});
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchAllEvents();
-    }, []);
-
-    return {events, loading, error};
+  return { events, loading, error };
 };
