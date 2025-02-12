@@ -37,11 +37,11 @@ export const useEvents = () => {
           }
 
           const data: ApiResponse = await response.json();
-
+          
           if (data?.events?.edges) {
             data.events.edges.forEach(({ node: event }) => {
               const date = format(parseISO(event.startAt), 'yyyy-MM-dd');
-
+              
               const formattedEvent: Event = {
                 id: event.id,
                 title: event.name,
@@ -74,5 +74,9 @@ export const useEvents = () => {
         setLoading(false);
       }
     };
-  }
-}
+
+    fetchAllEvents();
+  }, []);
+
+  return { events, loading, error };
+};
