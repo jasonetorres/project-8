@@ -64,7 +64,15 @@ export default function WeeklyCalendar() {
           </div>
         ))}
       </div>
-      <p>Events brought to you by <a href="https://guild.host/?utm_source=referral&utm_medium=chat&utm_campaign=general_link" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Guild.host</a></p>
+      <p>Events brought to you by
+          <a
+              href="https://guild.host/?utm_source=referral&utm_medium=chat&utm_campaign=general_link"
+              target="_blank" rel="noopener noreferrer"
+              className="text-blue-600 hover:underline"
+          >
+            Guild.host
+          </a>
+      </p>
     </div>
   );
 }
