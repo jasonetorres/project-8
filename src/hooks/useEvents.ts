@@ -31,7 +31,7 @@ export const useEvents = () => {
                 setLoading(true);
                 while (hasPreviousPage) {
                     const url = startCursor
-                        ? `https://guild.host/api/next/torc-dev/events/past?after=${startCursor}?before=${endCursor}`
+                        ? `https://guild.host/api/next/torc-dev/events/past?after=${startCursor}&before=${endCursor}`
                         : 'https://guild.host/api/next/torc-dev/events/past';
 
                     const response = await fetch(url);
@@ -65,15 +65,12 @@ export const useEvents = () => {
                         });
                     }
                     hasPreviousPage = data.events.pageInfo.hasPreviousPage;
-                    hasNextPage = data.events.pageInfo.hasNextPage;
-                    endCursor = data.events.pageInfo.endCursor;
                     startCursor = data.events.pageInfo.startCursor;
                 }
                 while (hasNextPage) {
                     const url = endCursor
                         ? `https://guild.host/api/next/torc-dev/events/upcoming?first=50&after=${endCursor}`
                         : 'https://guild.host/api/next/torc-dev/events/upcoming';
-
                     const response = await fetch(url);
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -102,10 +99,8 @@ export const useEvents = () => {
                             allFormattedEvents[date].push(formattedEvent);
                         });
                     }
-                    hasPreviousPage = data.events.pageInfo.hasPreviousPage;
                     hasNextPage = data.events.pageInfo.hasNextPage;
                     endCursor = data.events.pageInfo.endCursor;
-                    startCursor = data.events.pageInfo.startCursor;
                 }
                 setEvents(allFormattedEvents);
             } catch (error) {
